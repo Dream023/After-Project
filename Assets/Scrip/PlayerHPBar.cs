@@ -5,21 +5,23 @@ using UnityEngine.UI;
 
 public class PlayerHPBar : MonoBehaviour
 {
-    [SerializeField] GameObject Player, Enemy;
-    [SerializeField] Image Fill;
-    public Slider Health;
-    public Gradient HPColor;
-    public void SetMaxHealth(int MaxHP)
-    {
-        Health.maxValue = MaxHP;
-        Health.value = MaxHP;
-        Fill.color = HPColor.Evaluate(1f);
+    [SerializeField] GameObject Enemy;
+    int Health,CHP;
+    [SerializeField] Text HP;
+    private void Start()
+    {   
+        Health = 140;
+        CHP = Health;
+        HP.text = "HP : " + CHP;
     }
-    public void HealthBar(int HP)
+    private void OnTriggerEnter(Collider Enemy)
     {
-        Health.value = HP;
-        Fill.color = HPColor.Evaluate(Health.normalizedValue);
+        Health -= 20;
+        if (Health<=0)
+        {
+            Destroy(gameObject);
+        }
+        CHP = Health;
+        HP.text = "HP : " + CHP;
     }
-    
-
 }
